@@ -1,6 +1,6 @@
 /* eslint-disable no-invalid-this */
 import {Schema} from 'mongoose';
-import {UserEntity} from '../entities/UserEntity';
+import {UserEntity} from '../interfaces/UserInterfaces';
 
 export const UserSchema = new Schema<UserEntity>({
   firstName: String,

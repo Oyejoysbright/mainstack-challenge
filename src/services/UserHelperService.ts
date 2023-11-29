@@ -6,8 +6,7 @@ import JwtValidator from '@tawol-tech/tinnie/validators/JwtValidator';
 import jwt from 'jsonwebtoken';
 import UserRepo from '../repos/UserRepo';
 import {AuthConfigs} from '../configs/auth';
-import {ITokenData} from '../interfaces/UserInterfaces';
-import {UserEntity} from '../entities/UserEntity';
+import {ITokenData, UserEntity} from '../interfaces/UserInterfaces';
 
 export default class {
   protected static async validateUser(email: string, password?: string) {

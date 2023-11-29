@@ -1,0 +1,65 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@2.2.0
+  node: circleci/node@5.0.2
+jobs:
+  checkout-raw-build:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Install Only Prod Packages
+          command: yarn install --production
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+  docker-build-publish:
+    executor: docker/docker
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - setup_remote_docker
+      - docker/check
+      - docker/build:
+          image: ${DOCKER_IMAGE_GROUP}
+          use-buildkit: true
+          extra_build_args: '--build-arg ALLOWED_ORIGINS --build-arg TOKEN_KEY --build-arg COOKIE_KEY 
+                            --build-arg COOKIE_PARSER_KEY --build-arg DB_NAME --build-arg DATABASE_URL'          
+          tag: ${CIRCLE_PROJECT_REPONAME}-latest
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: ${DOCKER_IMAGE_GROUP}
+          tag: ${CIRCLE_PROJECT_REPONAME}-latest
+  deploy:
+    docker:
+      - image: arvindr226/alpine-ssh
+    steps:
+      - run:
+          name: Deploy
+          command: ssh -oStrictHostKeyChecking=no -v $DEPLOYMENT_USER@$DEPLOYMENT_IP "./deployments/$CIRCLE_PROJECT_REPONAME.sh"
+workflows:
+  test-instance:
+    jobs:
+      - checkout-raw-build:
+          context:
+            - project-test
+          filters:
+            branches:
+              only:
+                - develop
+      - docker-build-publish:
+          requires:
+            - checkout-raw-build
+          context:
+            - project-test
+      - deploy:
+          requires:
+            - docker-build-publish
+          context:
+            - project-test

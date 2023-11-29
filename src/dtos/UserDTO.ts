@@ -1,4 +1,4 @@
-import {UserEntity} from '../entities/UserEntity';
+import {UserEntity} from '../interfaces/UserInterfaces';
 
 export default class UserDTO {
   userId: string;
