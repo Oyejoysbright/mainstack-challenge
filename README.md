@@ -39,6 +39,8 @@ THINGS I WOULD LOVE TO IMPLEMENT/IMPROVE
 
 
 -MY COMMENT-
-It's interesting working on this.
+It's interesting working on this, though I don't really have enough time because of some commitment at work.
 Thanks and I'd love to hear from you soon.
 
+DISCLAIMER
+- I coded blindly - meaning that real test were not done because of time constraints.

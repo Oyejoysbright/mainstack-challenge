@@ -24,11 +24,6 @@ ENV TOKEN_KEY ${TOKEN_KEY}
 ENV COOKIE_KEY ${COOKIE_KEY}
 ENV COOKIE_PARSER_KEY ${COOKIE_PARSER_KEY}
 
-COPY package.json .
-
-RUN yarn
-RUN yarn build
-
-COPY . .
+COPY . /app
 
 CMD ["yarn", "start"]

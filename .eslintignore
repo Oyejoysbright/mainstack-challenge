@@ -3,6 +3,6 @@ build
 .husky
 babel.config.js
 jest.config.js
-__test__
-# **/*.test.*
+__tests__
+**/*Test.*
 coverage
