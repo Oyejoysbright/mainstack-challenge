@@ -27,6 +27,7 @@ ENV COOKIE_PARSER_KEY ${COOKIE_PARSER_KEY}
 COPY package.json .
 
 RUN yarn
+RUN yarn build
 
 COPY . .
 

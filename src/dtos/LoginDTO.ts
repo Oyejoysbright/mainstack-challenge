@@ -1,7 +1,6 @@
-import {UserEntity} from '../mongo/user.entities';
+import {UserEntity} from '../interfaces/UserInterfaces';
 
 export default class LoginDTO {
-  userId: string;
   fullName: string;
   username: string;
   isVerified: boolean;
@@ -11,7 +10,6 @@ export default class LoginDTO {
   lastName: string;
 
   constructor(data: UserEntity) {
-    this.userId = data.userId;
     this.firstName = data.firstName;
     this.lastName = data.lastName;
     this.fullName = data.lastName +' '+ data.firstName;
